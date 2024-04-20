@@ -9,7 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    public function up(): void
+    {
+        Schema::table('shops', function (Blueprint $table) {
+            //
+        });
+    }
 
-
-
+    /**
+     * Reverse the migrations.
+     */
+   
 };

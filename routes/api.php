@@ -1,8 +1,9 @@
 <?php
-
+use App\Http\controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::post("/utilisateur/inscription", [UserController:: class, "inscription"]);
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -17,6 +18,9 @@ Route::get('/shops/{id}', [ShopController::class, 'show']);
 Route::get('/shops/{id}/edit', [ShopController::class, 'edit']);
 Route::put('/shops/{id}', [ShopController::class, 'update']);
 Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
+
+
+
 
 Route::get('/hello', function () {
     return "Hello World!";
