@@ -14,7 +14,7 @@ class UserController extends Controller
             "email" => ["required", "email", "unique:users,email"],
             "password" => ["required", "string"],
             "adresse" => ["required", "String"],
-            "telephone" => ["required", "Number"],
+            "telephone" => ["required", "numeric"],
         ]);
 
         $utilisateurs = User::create([
