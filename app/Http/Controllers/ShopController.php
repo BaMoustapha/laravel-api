@@ -1,130 +1,109 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
 
-use Illuminate\Http\Request;
 use App\Models\Shop;
-
-use Illuminate\Support\Facades\Validator; // For validation
+use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Affiche la liste des boutiques.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $shops = Shop::all();
-        return response()->json($shops, 200);
+        return response()->json($shops);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // This method is not applicable when not using Blade views
-        // You can remove it or use it for other purposes within the controller
-        return response()->json(['message' => 'Use POST /shops to create a shop'], 200);
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Enregistre une nouvelle boutique.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'logo' => 'nullable|image|max:255',
+            'banniere' => 'nullable|image|max:255',
+            'telephone' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'adresse' => 'nullable|string|max:255',
+            'a_propos' => 'nullable|string'
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400); // Bad request with validation errors
-        }
+        $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
+        $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
 
-        $shop = Shop::create($request->all());
-        return response()->json($shop, 201); // Created
+
+
+        $shop = Shop::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'logo' => $logoPath,
+            'banniere' => $bannierePath,
+            'telephone' => $request->input('telephone'),
+            'email' => $request->input('email'),
+            'adresse' => $request->input('adresse'),
+            'a_propos' => $request->input('a_propos'),
+        ]);
+
+        return response()->json($shop, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Affiche les détails d'une boutique spécifique.
      *
-     * @param  int  $id
+     * @param  \App\Models\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shop $shop)
     {
-        $shop = Shop::find($id);
+        return response()->json($shop);
+    }
 
-        if (!$shop) {
-            return response()->json(['error' => 'Shop not found'], 404);
-        }
+    /**
+     * Met à jour les informations d'une boutique spécifique.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Shop  $shop
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Shop $shop)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'user_id' => 'required|exists:users,id', // Assurez-vous que l'utilisateur existe
+            'logo' => 'nullable|string|max:255',
+            'banniere' => 'nullable|string|max:255',
+            'telephone' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'adresse' => 'nullable|string|max:255',
+            'a_propos' => 'nullable|string'
+        ]);
+
+        $shop->update($request->all());
 
         return response()->json($shop, 200);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Supprime une boutique spécifique.
      *
-     * @param  int  $id
+     * @param  \App\Models\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function destroy(Shop $shop)
     {
-        // Similar to create(), this might not be applicable without Blade views
-        return response()->json(['message' => 'Use PUT /shops/{id} to update a shop'], 200);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400); // Bad request with validation errors
-        }
-
-        $shop = Shop::find($id);
-
-        if (!$shop) {
-            return response()->json(['error' => 'Shop not found'], 404);
-        }
-
-        $shop->update($request->all());
-        return response()->json($shop, 200); // Updated
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $shop = Shop::find($id);
-
-        if (!$shop) {
-            return response()->json(['error' => 'Shop not found'], 404);
-        }
-
         $shop->delete();
-        return response()->json(['message' => 'Shop deleted successfully'], 204); // No content
+
+        return response()->json(null, 204);
     }
 }
