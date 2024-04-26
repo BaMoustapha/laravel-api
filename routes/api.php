@@ -4,14 +4,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/users', [UserController::class, 'getAllUsers']);
 Route::get('/users/{id}', [UserController::class, 'getUsers']);
-Route::post("/utilisateur/inscription", [UserController:: class, "login"]);
+Route::post("/utilisateur/inscription", [UserController:: class, "inscription"]);
 Route::post("/utilisateur/connexion", [UserController:: class, "connexion"]);
 // modifier un utilisateur
 Route::put('/users/{id}', [UserController::class, 'updateUser']);
 // Route::post("/utilisateur/compte/deconnexion", [UserController:: class, "deconnexion"]);
 Route::post('/utilisateur/deconnexion', [UserController::class, 'deconnexion']);
 // suppression d'un compte utilisateur
-Route::delete('/utlisateur/delete', [UserController::class, 'delete']);
+Route::post('/utlisateur/suppression', [UserController::class, 'suppression']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
