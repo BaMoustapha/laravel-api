@@ -35,39 +35,77 @@ class UserController extends Controller
             "password" => ["required", "string"]
         ]);
       $utilisateur = User::where("email", $utilisateurDonnee["email"])->first();
-      if(!$utilisateur) return response(["message" => "Aucun utilisateur de trouver avec l'email suivante $utilisateurDonnee[email]"], 401);
+      if(!$utilisateur) 
+      return response(["message" => "Aucun utilisateur de trouver avec l'email suivante $utilisateurDonnee[email]"], 401);
       if(!Hash::check($utilisateurDonnee["password"], $utilisateur->password)){
         return response(["message" => "Aucun utilisateur de trouver avec ce mot de passe"], 401);
       } 
-      return $utilisateur;
+        // return $utilisateur;
       
-    }
-    
-    //   $token = $utilisateur->createToken("CLE_SECRETE")->plainTextToken;
-    //   return response([
-    //     "utilisateur" => $utilisateur,
-    //     "token" => $token
-    //   ], 200);
+      $token = $utilisateur->createToken("personal_access_tokens")->accessToken;
+      return response([
+        "utilisateur" => $utilisateur,
+        "token" => $token
+      ], 200);
 
-    
+    }
+
+    public function deconnexion(Request $request) {
+       auth()->logout();
+            return response(["message" => "Déconnexion réussie"], 200);
+        } 
+        // return response(["message" => "Déconnexion réussie"], 200);
+
+    // public function deconnexion() {
+    //     return auth()->user()->tokens->each(function($token, $key) {
+    //         $tokens->delete();
+    //     });
+    //     return response(["message" => "deconnexion"], 200);
+
+    // }
+     
 // deconnexion d'un compte
     // public function deconnexion() {
-    //     return auth()->user()->token->each(function($token, $key) {
-    //         $token->delete();
-    //     });
-    //     return response(["message" => "Deconnexion"], 200);
+    //     if (user()->check()) {
+    //         user()->user()->tokens->each(function($token, $key) {
+
+    //         });
+    //         return response(["message" => "Deconnexion"], 200);
+    //     } else {
+    //         return response(["message" => "Aucun utilisateur connecté"], 404);
+    //     }
+    //     // return auth()->user()->token->each(function($token, $key) {
+    //     //     $token->delete();
+    //     // });
     // }
 
-    public function deconnexion() {
-        if (auth()->check()) {
-            auth()->user()->tokens->each(function($token, $key) {
-                $token->delete();
-            });
-            return response(["message" => "Déconnexion réussie"], 200);
-        } else {
-            return response(["message" => "Aucun utilisateur connecté"], 404);
-        }
-    }
+    // public function deconnexion(Request $request) {
+    //     // Vérifiez si l'utilisateur est authentifié
+    //     if (auth()->check()) {
+    //         // Supprimez tous les tokens d'authentification de l'utilisateur
+    //         $request->user()->tokens()->delete();
+    //         return response()->json(['message' => 'Déconnexion réussie'], 200);
+    //     } else {
+    //         return response()->json(['message' => 'Aucun utilisateur connecté'], 404);
+    //     }
+    // }
+    
+
+    // public function deconnexion() {
+    //     if (auth()->check()) {
+    //         user()->user()->tokens->each(function($token, $key) {
+    //             $token->delete();
+    //         });
+    //         return response(["message" => "Déconnexion réussie"], 200);
+    //     } else {
+    //             return response(["message" => "Aucun utilisateur connecté"], 404);
+    //     }
+    // }
+    
+        // else {
+        //     return response(["message" => "Déconnexion réussie"], 200);
+        // }
+    
     
 
     // recuper tous les utilisateurs
