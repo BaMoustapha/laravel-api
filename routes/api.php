@@ -50,11 +50,11 @@ Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
 use App\Http\Controllers\CategoryController;
 
-Route::get('/categories', [ProductController::class, 'index']);
-Route::post('/categories', [ProductController::class, 'store']);
-Route::get('/categories/{id}', [ProductController::class, 'show']);
-Route::put('/categories/{id}', [ProductController::class, 'update']);
-Route::delete('/categories/{id}', [ProductController::class, 'destroy']);
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
+Route::put('/categories/{id}', [CategoryController::class, 'update']);
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 
 use App\Http\Controllers\MessageController;
