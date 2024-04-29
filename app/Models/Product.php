@@ -9,6 +9,15 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nom',
+        'image',
+        'description',
+        'prix',
+        'quantite',
+        'categorie_id',
+    ];
+
     /**
      * Get the category that owns the product.
      */
