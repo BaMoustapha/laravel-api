@@ -2,6 +2,15 @@
 use App\Http\controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
+
+Route::get('/hello', function () {
+    return "Hello World!";
+});
+
+
+
 Route::get('/users', [UserController::class, 'getAllUsers']);
 Route::get('/users/{id}', [UserController::class, 'getUsers']);
 Route::post("/utilisateur/inscription", [UserController:: class, "inscription"]);
@@ -24,50 +33,34 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
 use App\Http\Controllers\ShopController;
 
 Route::get('/shops', [ShopController::class, 'index']);
-Route::get('/shops/create', [ShopController::class, 'create']);
 Route::post('/shops', [ShopController::class, 'store']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
-Route::get('/shops/{id}/edit', [ShopController::class, 'edit']);
 Route::put('/shops/{id}', [ShopController::class, 'update']);
 Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 
 
+use App\Http\Controllers\ProductController;
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::put('/products/{id}', [ProductController::class, 'update']);
+Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
 
-Route::get('/hello', function () {
-    return "Hello World!";
-});
+use App\Http\Controllers\CategoryController;
+
+Route::get('/categories', [ProductController::class, 'index']);
+Route::post('/categories', [ProductController::class, 'store']);
+Route::get('/categories/{id}', [ProductController::class, 'show']);
+Route::put('/categories/{id}', [ProductController::class, 'update']);
+Route::delete('/categories/{id}', [ProductController::class, 'destroy']);
 
 
+use App\Http\Controllers\MessageController;
 
+Route::get('/messages', [MessageController::class, 'index']);
+Route::post('/messages', [MessageController::class, 'store']);
+Route::get('/messages/{message}', [MessageController::class, 'show']);
+Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
 
-// public function connexion(Request $request) {
-//     $utilisateurDonnee = $request->validate([
-//         "email" => ["required", "email"],
-//         "password" => ["required", "string"]
-//     ]);
-
-//     $utilisateurs = User::where("email", '=', $request->email)->first();
-
-//     if(!$utilisateurs) {
-//         return response()->json([
-//             'status' => 0,
-//             'message' => "Aucun utilisateur trouvé avec l'email suivant: {$utilisateurDonnee['email']}"
-//         ], 401);
-//     }
-
-//     if(!Hash::check($request->password, $utilisateurs->password)) {
-//         return response()->json([
-//             'status' => 0,
-//             'message' => "Mot de passe incorrect"
-//         ], 401);
-//     }
-
-//     $token = $utilisateurs->createToken("personel_acces_token")->accessToken;
-
-//     return response()->json([
-//         'status' => 1,
-//         'message' => "Connexion réussie",
-//         'access_token' => $token
-//     ], 200);
-// }
