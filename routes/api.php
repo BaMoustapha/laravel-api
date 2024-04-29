@@ -17,13 +17,17 @@ Route::post("/utilisateur/inscription", [UserController:: class, "inscription"])
 Route::post("/utilisateur/connexion", [UserController:: class, "connexion"]);
 // modifier un utilisateur
 Route::put('/users/{id}', [UserController::class, 'updateUser']);
+// Route::post("/utilisateur/compte/deconnexion", [UserController:: class, "deconnexion"]);
+Route::post('/utilisateur/deconnexion', [UserController::class, 'deconnexion']);
+// suppression d'un compte utilisateur
+Route::post('/utlisateur/suppression', [UserController::class, 'suppression']);
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 Route::group(["middleware" => ["auth:sanctum"]], function () {
 }) ;
 
-Route::post("/utilisateur/compte/deconnexion", [UserController:: class, "deconnexion"]);
 
 
 use App\Http\Controllers\ShopController;
@@ -59,3 +63,4 @@ Route::get('/messages', [MessageController::class, 'index']);
 Route::post('/messages', [MessageController::class, 'store']);
 Route::get('/messages/{message}', [MessageController::class, 'show']);
 Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
+
