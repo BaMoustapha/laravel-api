@@ -80,24 +80,21 @@ class UserController extends Controller
                     return response(["message" => "Déconnexion réussie"], 200);
                 } 
 
-            // Méthode pour modifier un utilisateur
-            public function updateUser(Request $request, $id)
+            // Méthode pour modifier les donnees d'un utilisateur
+            public function editUser(Request $request, $id)
             {
                 // Valider les données de la requête
                 $request->validate([
-                    'name' => 'required|string|max:255',
-                    'prenom' => 'required|string|max:255',
-                    'email' => 'required|email|unique:users,email,'.$id,
+                    'name' => 'required|string',
+                    'prenom' => 'required|string',
+                    'email' => 'required|email|unique:users,email,' .$id,
                     'adresse' => 'required|string',
                     'telephone' => 'required|numeric',
          ]);
- 
-         // Trouver l'utilisateur à modifier
+         // Trouver l'utilisateur à modifier par son l'ID
          $user = User::findOrFail($id);
- 
          // Mettre à jour les données de l'utilisateur
          $user->update($request->all());
- 
          return response()->json($user, 200);
      }
 
