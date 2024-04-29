@@ -16,7 +16,7 @@ Route::get('/users/{id}', [UserController::class, 'getUsers']);
 Route::post("/utilisateur/inscription", [UserController:: class, "inscription"]);
 Route::post("/utilisateur/connexion", [UserController:: class, "connexion"]);
 // modifier un utilisateur
-Route::put('/users/{id}', [UserController::class, 'updateUser']);
+Route::put('/users/{id}/edit', [UserController::class, 'editUser']);
 // Route::post("/utilisateur/compte/deconnexion", [UserController:: class, "deconnexion"]);
 Route::post('/utilisateur/deconnexion', [UserController::class, 'deconnexion']);
 // suppression d'un compte utilisateur
