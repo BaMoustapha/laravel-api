@@ -65,7 +65,7 @@ class ShopController extends Controller
      */
     public function show(Shop $shop)
     {
-        return response()->json($shop);
+        return response()->json($shop, 200);
     }
 
     /**

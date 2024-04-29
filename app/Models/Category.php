@@ -17,4 +17,9 @@ class Category extends Model
      * Get the products for the category.
      */
 
+     public function shop()
+    {
+        return $this->belongsTo(shop::class);
+    }
+
 }
