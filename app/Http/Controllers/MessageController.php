@@ -47,22 +47,24 @@ class MessageController extends Controller
     /**
      * Affiche les détails d'un message.
      *
-     * @param  \App\Models\Message  $message
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show($id)
     {
-        return response()->json($message);
+        $message =Message::findOrFail($id);
+        return response()->json($message, 200);
     }
 
     /**
      * Supprime un message spécifique.
      *
-     * @param  \App\Models\Message  $message
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Message $message)
+    public function destroy($id)
     {
+        $message = Message::findOrFail($id);
         $message->delete();
 
         return response()->json(null, 204);

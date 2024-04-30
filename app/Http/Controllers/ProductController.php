@@ -30,22 +30,23 @@ class ProductController extends Controller
     {
         $request->validate([
             'nom' => 'required|string',
-            'image' => 'required|string',
+            'image' => 'required|image',
             'description' => 'required|string',
             'prix' => 'required|numeric',
             'quantite' => 'required|integer',
-            // 'categorie_id' => 'required|exists:categories,id',
+            'categorie_id' => 'required|exists:categories,id'
         ]);
 
-        $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('product_image'));
-
+        // Gestion de l'enregistrement de l'image
+        $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
 
         $product = Product::create([
-            'nom' => $request->input('name'),
+            'nom' => $request->input('nom'),
             'description' => $request->input('description'),
             'image' => $imagePath,
             'prix' => $request->input('prix'),
             'quantite' => $request->input('quantite'),
+            'categorie_id' => $request->input('categorie_id')
         ]);
 
         return response()->json($product, 201);
@@ -54,11 +55,12 @@ class ProductController extends Controller
     /**
      * Affiche les détails d'un produit.
      *
-     * @param  \App\Models\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = Product::findOrFail($id);
         return response()->json($product);
     }
 
@@ -66,18 +68,20 @@ class ProductController extends Controller
      * Met à jour les informations d'un produit.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
+        $product = Product::findOrFail($id);
+
         $request->validate([
             'nom' => 'required|string',
-            'image' => 'required|string',
+            'image' => 'required|image',
             'description' => 'required|string',
             'prix' => 'required|numeric',
             'quantite' => 'required|integer',
-            // 'categorie_id' => 'required|exists:categories,id',
+            'categorie_id' => 'required|exists:categories,id',
         ]);
 
         $product->update($request->all());
@@ -88,11 +92,12 @@ class ProductController extends Controller
     /**
      * Supprime un produit spécifique.
      *
-     * @param  \App\Models\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+        $product = Product::findOrFail($id);
         $product->delete();
 
         return response()->json(null, 204);
