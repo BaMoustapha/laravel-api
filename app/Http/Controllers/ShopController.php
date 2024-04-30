@@ -8,15 +8,17 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
+    // Autres méthodes omises pour la brièveté
+
     /**
-     * Affiche la liste des boutiques.
+     * Affiche la liste de toutes les boutiques.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $shops = Shop::all();
-        return response()->json($shops);
+        return response()->json($shops, 200);
     }
 
     /**
@@ -46,8 +48,6 @@ class ShopController extends Controller
         $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
         $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
 
-
-
         $shop = Shop::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
@@ -65,11 +65,12 @@ class ShopController extends Controller
     /**
      * Affiche les détails d'une boutique spécifique.
      *
-     * @param  \App\Models\Shop  $shop
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Shop $shop)
+    public function show($id)
     {
+        $shop = Shop::findOrFail($id);
         return response()->json($shop, 200);
     }
 
@@ -77,17 +78,19 @@ class ShopController extends Controller
      * Met à jour les informations d'une boutique spécifique.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Shop  $shop
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shop $shop)
+    public function update(Request $request, $id)
     {
+        $shop = Shop::findOrFail($id);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'user_id' => 'required|exists:users,id', // Assurez-vous que l'utilisateur existe
-            'logo' => 'nullable|string|max:255',
-            'banniere' => 'nullable|string|max:255',
+            'user_id' => 'required|exists:users,id',
+            'logo' => 'nullable|image|max:255',
+            'banniere' => 'nullable|image|max:255',
             'telephone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'adresse' => 'nullable|string|max:255',
@@ -102,11 +105,12 @@ class ShopController extends Controller
     /**
      * Supprime une boutique spécifique.
      *
-     * @param  \App\Models\Shop  $shop
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Shop $shop)
+    public function destroy($id)
     {
+        $shop = Shop::findOrFail($id);
         $shop->delete();
 
         return response()->json(null, 204);
