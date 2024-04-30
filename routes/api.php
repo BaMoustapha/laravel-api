@@ -32,6 +32,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
 
 use App\Http\Controllers\ShopController;
 
+
 Route::get('/shops', [ShopController::class, 'index']);
 Route::post('/shops', [ShopController::class, 'store']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
@@ -40,6 +41,7 @@ Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 
 
 use App\Http\Controllers\ProductController;
+
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products', [ProductController::class, 'store']);
@@ -50,6 +52,7 @@ Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
 use App\Http\Controllers\CategoryController;
 
+
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/categories', [CategoryController::class, 'store']);
 Route::get('/categories/{id}', [CategoryController::class, 'show']);
@@ -58,6 +61,7 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 
 use App\Http\Controllers\MessageController;
+
 
 Route::get('/messages', [MessageController::class, 'index']);
 Route::post('/messages', [MessageController::class, 'store']);

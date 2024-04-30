@@ -30,9 +30,9 @@ class ShopController extends Controller
     public function store(Request $request)
     {
                 // Vérifier si l'utilisateur est authentifié
-            if (!auth()->check()) {
-                return response()->json(['message' => 'Vous devez vous connecter pour créer une boutique'], 401);
-            }
+            // if (!auth()->check()) {
+            //     return response()->json(['message' => 'Vous devez vous connecter pour créer une boutique'], 401);
+            // }
             
         $request->validate([
             'name' => 'required|string|max:255',

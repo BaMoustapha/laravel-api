@@ -10,14 +10,15 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'name'
+        // 'shop_id'
     ];
 
     /**
      * Get the products for the category.
      */
 
-     public function shop()
+    public function shop()
     {
         return $this->belongsTo(shop::class);
     }
