@@ -6,10 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
+
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -17,9 +19,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'prenom',
         'name',
         'email',
         'password',
+        'adresse',
+        'telephone'
     ];
 
     /**
@@ -44,4 +49,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+
+    
+
+    public function shops()
+    {
+        return $this->hasMany(Shop::class);
+    }
+
+
 }
+
