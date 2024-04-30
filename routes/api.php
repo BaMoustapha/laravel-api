@@ -61,6 +61,6 @@ use App\Http\Controllers\MessageController;
 
 Route::get('/messages', [MessageController::class, 'index']);
 Route::post('/messages', [MessageController::class, 'store']);
-Route::get('/messages/{message}', [MessageController::class, 'show']);
-Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
+Route::get('/messages/{id}', [MessageController::class, 'show']);
+Route::delete('/messages/{id}', [MessageController::class, 'destroy']);
 
