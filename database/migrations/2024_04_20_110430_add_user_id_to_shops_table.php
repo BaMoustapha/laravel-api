@@ -9,16 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-    Schema::table('shops', function (Blueprint $table) {
-        $table->unsignedBigInteger('user_id')->nullable();
-        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-    });
-}
+//     public function up()
+// {
+//     Schema::table('shops', function (Blueprint $table) {
+//         $table->unsignedBigInteger('user_id')->nullable();
+//         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+//     });
+// }
 
     /**
      * Reverse the migrations.
      */
-    
+
 };
