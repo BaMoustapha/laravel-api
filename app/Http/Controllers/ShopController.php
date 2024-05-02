@@ -30,19 +30,10 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-          // Vérifier si l'utilisateur est connecté
-          if (!Auth::check()) {
-            return response()->json(['error' => 'Vous devez être connecté pour créer une boutique'], 401);
-        }
-
-        // Créer la boutique
-        $shop = new Shop();
-        $shop->user_id = Auth::user()->id; // Assigner l'ID de l'utilisateur connecté à la boutique
-        // Autres attributs de la boutique...
-        $shop->save();
-
-        return response()->json(['message' => 'Boutique créée avec succès'], 201);
-    
+        // Vérifier si l'utilisateur est authentifié
+        // if (!auth()->check()) {
+        //     return response()->json(['message' => 'Vous devez vous connecter pour créer une boutique'], 401);
+        // }
 
         $request->validate([
             'name' => 'required|string|max:255',
