@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Shop;
@@ -29,11 +30,11 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-                // Vérifier si l'utilisateur est authentifié
-            if (!auth()->check()) {
-                return response()->json(['message' => 'Vous devez vous connecter pour créer une boutique'], 401);
-            }
-            
+        // Vérifier si l'utilisateur est authentifié
+        // if (!auth()->check()) {
+        //     return response()->json(['message' => 'Vous devez vous connecter pour créer une boutique'], 401);
+        // }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -42,11 +43,19 @@ class ShopController extends Controller
             'telephone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'adresse' => 'nullable|string|max:255',
-            'a_propos' => 'nullable|string'
+            'a_propos' => 'nullable|string',
+            'user_id' => 'nullable|exists:users,id'
         ]);
 
-        $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
-        $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
+        $logoPath = null;
+        if ($request->hasFile('logo')) {
+            $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
+        }
+
+        $bannierePath = null;
+        if ($request->hasFile('banniere')) {
+            $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
+        }
 
         $shop = Shop::create([
             'name' => $request->input('name'),
@@ -57,6 +66,7 @@ class ShopController extends Controller
             'email' => $request->input('email'),
             'adresse' => $request->input('adresse'),
             'a_propos' => $request->input('a_propos'),
+            'user_id' => $request->input('user_id')
         ]);
 
         return response()->json($shop, 201);
@@ -82,25 +92,28 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $shop = Shop::findOrFail($id);
+{
+  $shop = Shop::findOrFail($id);
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'user_id' => 'required|exists:users,id',
-            'logo' => 'nullable|image|max:255',
-            'banniere' => 'nullable|image|max:255',
-            'telephone' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'adresse' => 'nullable|string|max:255',
-            'a_propos' => 'nullable|string'
-        ]);
+  $request->validate([
+    'name' => 'required|string|max:255',
+    'description' => 'nullable|string',
+    'user_id' => 'nullable|exists:users,id',
+    'logo' => 'nullable|image|max:255',
+    'banniere' => 'nullable|image|max:255',
+    'telephone' => 'nullable|string|max:255',
+    'email' => 'nullable|email|max:255',
+    'adresse' => 'nullable|string|max:255',
+    'a_propos' => 'nullable|string'
+  ]);
 
-        $shop->update($request->all());
+  $shop->update($request->all());
 
-        return response()->json($shop, 200);
-    }
+  // Fetch the updated shop data from the database (important!)
+  $updatedShop = Shop::findOrFail($id);
+
+  return response()->json($updatedShop, 200);
+}
 
     /**
      * Supprime une boutique spécifique.

@@ -17,7 +17,7 @@ class Shop extends Model
         'banniere',
         'telephone',
         'email',
-        'addresse',
+        'adresse',
         'a_propos'
     ];
 
