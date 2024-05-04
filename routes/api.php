@@ -1,23 +1,16 @@
+
 <?php
-
-use Illuminate\Http\Request;
+ 
 use Illuminate\Support\Facades\Route;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-
-use App\Http\Controllers\ShopController;
-
-Route::get('/shops', [ShopController::class, 'index']);
-Route::get('/shops/create', [ShopController::class, 'create']);
-Route::post('/shops', [ShopController::class, 'store']);
-Route::get('/shops/{id}', [ShopController::class, 'show']);
-Route::get('/shops/{id}/edit', [ShopController::class, 'edit']);
-Route::put('/shops/{id}', [ShopController::class, 'update']);
-Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
-
-Route::get('/hello', function () {
-    return "Hello World!";
+use App\Http\Controllers\AuthController;
+ 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
+    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
+    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
 });
