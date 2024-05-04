@@ -72,11 +72,36 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
+<<<<<<< HEAD
     // Deconnexion compte utilisateur
             public function deconnexion(Request $request) {
                auth()->logout();
                     return response(["message" => "Déconnexion réussie"], 200);
                 }
+=======
+    // Deconnexion compte utilisateur   
+<<<<<<< HEAD
+        public function deconnexion(Request $request)
+        {
+            // Récupérer l'utilisateur authentifié
+            
+           // Revoke all tokens...
+                $user->tokens()->delete();
+                
+                // Revoke a specific token...
+                $user->tokens()->where('id', $tokenId)->delete();
+            // Déconnexion de l'utilisateur
+            Auth()->logout();
+        
+            return response()->json(['message' => 'Déconnexion réussie'], 200);
+        }
+=======
+            public function deconnexion(Request $request) {
+               auth()->logout();
+                    return response(["message" => "Déconnexion réussie"], 200);
+                } 
+>>>>>>> 587ee2412e167d8bcd8b6c98fcad123fb4f51299
+>>>>>>> a911af879f3fd94bcb11a384e2d04220cce44d7c
 
             // Méthode pour modifier les donnees d'un utilisateur
             public function editUser(Request $request, $id)
