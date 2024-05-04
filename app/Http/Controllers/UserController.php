@@ -75,6 +75,7 @@ class UserController extends Controller
     }
 
     // Deconnexion compte utilisateur   
+<<<<<<< HEAD
         public function deconnexion(Request $request)
         {
             // Récupérer l'utilisateur authentifié
@@ -89,6 +90,12 @@ class UserController extends Controller
         
             return response()->json(['message' => 'Déconnexion réussie'], 200);
         }
+=======
+            public function deconnexion(Request $request) {
+               auth()->logout();
+                    return response(["message" => "Déconnexion réussie"], 200);
+                } 
+>>>>>>> 587ee2412e167d8bcd8b6c98fcad123fb4f51299
 
             // Méthode pour modifier les donnees d'un utilisateur
             public function editUser(Request $request, $id)

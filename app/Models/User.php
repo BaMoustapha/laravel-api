@@ -6,10 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Laravel\Passport\HasApiTokens;
-
- 
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -21,9 +20,12 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
+        'prenom',
         'name',
         'email',
         'password',
+        'adresse',
+        'telephone'
     ];
 
     /**
@@ -64,4 +66,16 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
+
+
+    
+
+    public function shops()
+    {
+        return $this->hasMany(Shop::class);
+    }
+
 }
+

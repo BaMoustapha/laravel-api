@@ -12,6 +12,18 @@ class Shop extends Model
     protected $fillable = [
         'name',
         'description',
+        'user_id',
+        'logo',
+        'banniere',
+        'telephone',
+        'email',
+        'adresse',
+        'a_propos'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
