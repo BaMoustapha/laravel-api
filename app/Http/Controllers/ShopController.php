@@ -35,6 +35,8 @@ class ShopController extends Controller
         //     return response()->json(['message' => 'Vous devez vous connecter pour créer une boutique'], 401);
         // }
 
+        $user = $request->user;
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',

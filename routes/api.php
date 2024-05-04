@@ -22,23 +22,23 @@ Route::post('/utilisateur/deconnexion', [UserController::class, 'deconnexion']);
 // suppression d'un compte utilisateur
 Route::post('/utlisateur/suppression', [UserController::class, 'suppression']);
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-Route::group(["middleware" => ["auth:sanctum"]], function () {
-}) ;
-
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
+// Route::group(["middleware" => ["auth:sanctum"]], function () {
+// }) ;
 
 
 use App\Http\Controllers\ShopController;
 
+use App\Http\Middleware\ShopCreationMiddleware;
 
-Route::get('/shops', [ShopController::class, 'index']);
-Route::post('/shops', [ShopController::class, 'store']);
-Route::get('/shops/{id}', [ShopController::class, 'show']);
-Route::put('/shops/{id}', [ShopController::class, 'update']);
-Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
-
+    // Routes de boutique ici
+    Route::get('/shops', [ShopController::class, 'index']);
+    Route::post('/shops', [ShopController::class, 'store']);
+    Route::get('/shops/{id}', [ShopController::class, 'show']);
+    Route::put('/shops/{id}', [ShopController::class, 'update']);
+    Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 
 use App\Http\Controllers\ProductController;
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
- use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,13 +35,13 @@ class UserController extends Controller
             "password" => ["required", "string"]
         ]);
       $utilisateur = User::where("email", $utilisateurDonnee["email"])->first();
-      if(!$utilisateur) 
+      if(!$utilisateur)
       return response(["message" => "Aucun utilisateur de trouver avec l'email suivante $utilisateurDonnee[email]"], 401);
       if(!Hash::check($utilisateurDonnee["password"], $utilisateur->password)){
         return response(["message" => "Aucun utilisateur de trouver avec ce mot de passe"], 401);
-      } 
+      }
         // return $utilisateur;
-      
+
       $token = $utilisateur->createToken("personal_access_tokens")->accessToken;
       return response([
         "utilisateur" => $utilisateur,
@@ -50,18 +50,16 @@ class UserController extends Controller
 
     }
 
-    
-    
-    
+
     // recuper tous les utilisateurs
     public function getAllUsers()
     {
         $users = User::all();
         return response()->json($users, 200);
     }
-    
+
     // recupere un utilisateur par son ID
-    
+
     public function getUsers($id)
     {
         // Trouver l'utilisateur par son ID
@@ -69,16 +67,16 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Utilisateur n\'existe pas'], 404);
         }
-        
+
         // Retourner l'utilisateur trouvé
         return response()->json($user, 200);
     }
 
-    // Deconnexion compte utilisateur   
+    // Deconnexion compte utilisateur
             public function deconnexion(Request $request) {
                auth()->logout();
                     return response(["message" => "Déconnexion réussie"], 200);
-                } 
+                }
 
             // Méthode pour modifier les donnees d'un utilisateur
             public function editUser(Request $request, $id)
@@ -103,12 +101,12 @@ class UserController extends Controller
         $utilisateurDonnee = $request->validate([
             "email" => ["required", "email", "exists:users,email"],
             "password" => ["required", "string"],
-            "user_id" => ["required", "numeric"]    
+            "user_id" => ["required", "numeric"]
         ]);
         $utilisateur = User::where("email", $utilisateurDonnee["email"])->first();
         if (!Hash::check($utilisateurDonnee["password"], $utilisateur->password)){
             return response(["message" => "Aucun utilisateur de trouver avec ce mot de passe"], 401);
-          } 
+          }
 
         if($utilisateur->id == $utilisateurDonnee["user_id"]) {
             return response(["message" => "Action interdite"], 403);
