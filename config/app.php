@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    // Uncomment this line
+  
+
 ];
+// Uncomment this line
