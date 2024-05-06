@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('shops', function (Blueprint $table) {
-            //
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('shop_id');
         });
     }
 
     /**
      * Reverse the migrations.
      */
-
+    public function down(): void
+    {
+        
+    }
 };

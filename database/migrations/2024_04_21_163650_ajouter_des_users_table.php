@@ -9,14 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('prenom')->nullable()->after('name');
-            $table->string('adresse')->nullable()->after('prenom');
-            $table->bigInteger('telephone')->nullable()->after('adresse');
-        });
-    }
+    // public function up(): void
+    // {
+    //     Schema::table('users', function (Blueprint $table) {
+    //         $table->string('prenom')->nullable()->after('name');
+    //         $table->string('adresse')->nullable()->after('prenom');
+    //         $table->bigInteger('telephone')->nullable()->after('adresse');
+    //     });
+    // }
 
     /**
      * Reverse the migrations.

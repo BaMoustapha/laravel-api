@@ -10,7 +10,7 @@ class Kernel extends HttpKernel
     protected $middleware = [
         \App\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class, // Ajoutez cette ligne pour activer le middleware CORS
-        // Autres middlewares...
+        
     ];
 
     // ...

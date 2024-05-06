@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->required();
             $table->decimal('prix', 8, 2)->required();
             $table->integer('quantite')->default(1)->required();
-            $table->unsignedBigInteger('categorie_id')->required();
+            $table->unsignedBigInteger('categorie_id')->nullable();
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
             $table->timestamps();
         });
