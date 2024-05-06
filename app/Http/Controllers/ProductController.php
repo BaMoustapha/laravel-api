@@ -72,22 +72,37 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $product = Product::findOrFail($id);
+{
+    $product = Product::findOrFail($id);
 
-        $request->validate([
-            'nom' => 'required|string',
-            'image' => 'required|image',
-            'description' => 'required|string',
-            'prix' => 'required|numeric',
-            'quantite' => 'required|integer',
-            'categorie_id' => 'required|exists:categories,id',
-        ]);
+    $request->validate([
+        'nom' => 'required|string',
+        'description' => 'required|string',
+        'prix' => 'required|numeric',
+        'quantite' => 'required|integer',
+        'categorie_id' => 'required|exists:categories,id',
+        'image' => 'nullable|image', // Vous pouvez rendre l'image facultative pour la mise à jour
+    ]);
 
-        $product->update($request->all());
+    $data = [
+        'nom' => $request->input('nom'),
+        'description' => $request->input('description'),
+        'prix' => $request->input('prix'),
+        'quantite' => $request->input('quantite'),
+        'categorie_id' => $request->input('categorie_id'),
+    ];
 
-        return response()->json($product, 200);
+    // Gérez la mise à jour de l'image si une nouvelle image est fournie
+    if ($request->hasFile('image')) {
+        $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
+        $data['image'] = $imagePath;
     }
+
+    $product->update($data);
+
+    return response()->json($product, 200);
+}
+
 
     /**
      * Supprime un produit spécifique.
