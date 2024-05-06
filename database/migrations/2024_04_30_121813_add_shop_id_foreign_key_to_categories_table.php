@@ -11,13 +11,13 @@ class AddShopIdForeignKeyToCategoriesTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->unsignedBigInteger('shop_id');
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
-        });
-    }
+    // public function up()
+    // {
+    //     Schema::table('categories', function (Blueprint $table) {
+    //         $table->unsignedBigInteger('shop_id');
+    //         $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
+    //     });
+    // }
 
     /**
      * Reverse the migrations.
