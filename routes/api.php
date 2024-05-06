@@ -1,7 +1,8 @@
 <?php
 
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 
@@ -37,22 +38,6 @@ Route::get('/hello', function () {
 });
 
 
-Route::get('/users', [UserController::class, 'getAllUsers']);
-Route::get('/users/{id}', [UserController::class, 'getUsers']);
-Route::post("/utilisateur/inscription", [UserController:: class, "inscription"]);
-Route::post("/utilisateur/connexion", [UserController:: class, "connexion"]);
-// modifier un utilisateur
-Route::put('/users/{id}/edit', [UserController::class, 'editUser']);
-// Route::post("/utilisateur/compte/deconnexion", [UserController:: class, "deconnexion"]);
-Route::post('/utilisateur/deconnexion', [UserController::class, 'deconnexion']);
-// suppression d'un compte utilisateur
-Route::post('/utlisateur/suppression', [UserController::class, 'suppression']);
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-// Route::group(["middleware" => ["auth:sanctum"]], function () {
-// }) ;
 
 
 use App\Http\Controllers\ShopController;
