@@ -72,36 +72,42 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-{
-    $product = Product::findOrFail($id);
+    {
+        $product = Product::findOrFail($id);
 
-    $request->validate([
-        'nom' => 'required|string',
-        'description' => 'required|string',
-        'prix' => 'required|numeric',
-        'quantite' => 'required|integer',
-        'categorie_id' => 'required|exists:categories,id',
-        'image' => 'nullable|image', // Vous pouvez rendre l'image facultative pour la mise à jour
-    ]);
+        $request->validate([
+            'nom' => 'required|string',
+            'description' => 'required|string',
+            'prix' => 'required|numeric',
+            'quantite' => 'required|integer',
+            'categorie_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image', // Optional image validation
+        ]);
 
-    $data = [
-        'nom' => $request->input('nom'),
-        'description' => $request->input('description'),
-        'prix' => $request->input('prix'),
-        'quantite' => $request->input('quantite'),
-        'categorie_id' => $request->input('categorie_id'),
-    ];
+        $data = [
+            'nom' => $request->input('nom'),
+            'description' => $request->input('description'),
+            'prix' => $request->input('prix'),
+            'quantite' => $request->input('quantite'),
+            'categorie_id' => $request->input('categorie_id'),
+        ];
 
-    // Gérez la mise à jour de l'image si une nouvelle image est fournie
-    if ($request->hasFile('image')) {
-        $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
-        $data['image'] = $imagePath;
+        // Manage image update if a new image is provided
+        if ($request->hasFile('image')) {
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image); // Delete old image
+            }
+            $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
+            $data['image'] = $imagePath;
+        }
+
+        $product->update($data);
+
+        return response()->json($product, 200);
     }
 
-    $product->update($data);
 
-    return response()->json($product, 200);
-}
+
 
 
     /**

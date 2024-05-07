@@ -9,9 +9,6 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/users', [AuthController::class, 'getAllUsers']);
-// Route::post('/logout', [AuthController::class, 'logout']);
-// Route::get('/me', [AuthController::class, 'me'] );
-// Route::delete('/delete', [AuthController::class, 'delete'] );
 
 Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/me', [AuthController::class, 'me']);
@@ -21,16 +18,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 });
 
 
-// Route::group([
-//     'middleware' => 'api',
-//     'prefix' => 'auth'
-// ], function ($router) {
-//     Route::post('/register', [AuthController::class, 'register'])->name('register');
-//     Route::post('/login', [AuthController::class, 'login'])->name('login');
-//     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
-//     Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
-//     Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
-// });
 use App\Http\controllers\UserController;
 
 Route::get('/hello', function () {
@@ -42,10 +29,12 @@ Route::get('/hello', function () {
 
 use App\Http\Controllers\ShopController;
 
+Route::get('/shops', [ShopController::class, 'index']);
+    Route::post('/shops', [ShopController::class, 'store']);
+
 Route::middleware('auth:api')->group(function () {
     // Routes de boutique protégées
-    Route::get('/shops', [ShopController::class, 'index']);
-    Route::post('/shops', [ShopController::class, 'store']);
+    
     Route::get('/shops/{id}', [ShopController::class, 'show']);
     Route::put('/shops/{id}', [ShopController::class, 'update']);
     Route::delete('/shops/{id}', [ShopController::class, 'destroy']);

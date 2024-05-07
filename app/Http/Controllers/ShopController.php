@@ -40,8 +40,8 @@ class ShopController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'logo' => 'nullable|image|max:255',
-            'banniere' => 'nullable|image|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Logo : JPEG, PNG, max 2 Mo
+            'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'telephone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'adresse' => 'nullable|string|max:255',
@@ -96,11 +96,11 @@ class ShopController extends Controller
     public function update(Request $request, $id)
 {
   $shop = Shop::findOrFail($id);
+  dd($request->all());
 
-  $request->validate([
+ $validated = $request->validate([
     'name' => 'required|string|max:255',
     'description' => 'nullable|string',
-    'user_id' => 'nullable|exists:users,id',
     'logo' => 'nullable|image|max:255',
     'banniere' => 'nullable|image|max:255',
     'telephone' => 'nullable|string|max:255',
@@ -109,12 +109,34 @@ class ShopController extends Controller
     'a_propos' => 'nullable|string'
   ]);
 
-  $shop->update($request->all());
+ 
+
+  $logoPath = null;
+        if ($request->hasFile('logo')) {
+            $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
+        }
+
+        $bannierePath = null;
+        if ($request->hasFile('banniere')) {
+            $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
+        }
+
+
+  $shop = Shop::update([
+    'name' => $request->input('name'),
+    'description' => $request->input('description'),
+    'logo' => $logoPath,
+    'banniere' => $bannierePath,
+    'telephone' => $request->input('telephone'),
+    'email' => $request->input('email'),
+    'adresse' => $request->input('adresse'),
+    'a_propos' => $request->input('a_propos'),
+]);
 
   // Fetch the updated shop data from the database (important!)
-  $updatedShop = Shop::findOrFail($id);
 
-  return response()->json($updatedShop, 200);
+
+  return response()->json($shop, 200);
 }
 
     /**
