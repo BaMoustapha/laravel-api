@@ -11,10 +11,16 @@ class Category extends Model
 
     protected $fillable = [
         'name',
+        'shop_id'
     ];
 
     /**
      * Get the products for the category.
      */
+
+    public function shop()
+    {
+        return $this->belongsTo(shop::class);
+    }
 
 }
