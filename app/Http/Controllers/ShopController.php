@@ -30,15 +30,11 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        // Vérifier si l'utilisateur est authentifié
-        // if (!auth()->check()) {
-        //     return response()->json(['message' => 'Vous devez vous connecter pour créer une boutique'], 401);
-        // }
 
         $user = $request->user;
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|unique:shops|max:255',
             'description' => 'nullable|string',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Logo : JPEG, PNG, max 2 Mo
             'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -52,11 +48,13 @@ class ShopController extends Controller
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
+            $logoPath = asset('storage/' . $logoPath);
         }
 
         $bannierePath = null;
         if ($request->hasFile('banniere')) {
             $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
+            $bannierePath = asset('storage/' . $bannierePath);
         }
 
         $shop = Shop::create([
@@ -71,6 +69,7 @@ class ShopController extends Controller
             'user_id' => $request->input('user_id')
         ]);
 
+        // Retourner la réponse JSON avec les URL des images
         return response()->json($shop, 201);
     }
 
@@ -93,51 +92,42 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-{
-  $shop = Shop::findOrFail($id);
-  dd($request->all());
-
- $validated = $request->validate([
-    'name' => 'required|string|max:255',
-    'description' => 'nullable|string',
-    'logo' => 'nullable|image|max:255',
-    'banniere' => 'nullable|image|max:255',
-    'telephone' => 'nullable|string|max:255',
-    'email' => 'nullable|email|max:255',
-    'adresse' => 'nullable|string|max:255',
-    'a_propos' => 'nullable|string'
-  ]);
-
- 
-
-  $logoPath = null;
-        if ($request->hasFile('logo')) {
-            $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
-        }
-
-        $bannierePath = null;
-        if ($request->hasFile('banniere')) {
-            $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
-        }
-
-
-  $shop = Shop::update([
-    'name' => $request->input('name'),
-    'description' => $request->input('description'),
-    'logo' => $logoPath,
-    'banniere' => $bannierePath,
-    'telephone' => $request->input('telephone'),
-    'email' => $request->input('email'),
-    'adresse' => $request->input('adresse'),
-    'a_propos' => $request->input('a_propos'),
-]);
-
-  // Fetch the updated shop data from the database (important!)
-
-
-  return response()->json($shop, 200);
-}
+    
+     public function update(Request $request, $id)
+     {
+         $shop = Shop::findOrFail($id);
+     
+         $validated = $request->validate([
+             'name' => 'nullable|string|max:255',
+             'description' => 'nullable|string',
+             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+             'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+             'telephone' => 'nullable|string|max:255',
+             'email' => 'nullable|email|max:255',
+             'adresse' => 'nullable|string|max:255',
+             'a_propos' => 'nullable|string'
+         ]);
+     
+         if ($request->hasFile('logo')) {
+             $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
+             $logoPath = asset('storage/' . $logoPath);
+             $validated['logo'] = $logoPath;
+         }
+     
+         if ($request->hasFile('banniere')) {
+             $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
+             $bannierePath = asset('storage/' . $bannierePath);
+             $validated['banniere'] = $bannierePath;
+         }
+     
+         $shop->update($validated);
+     
+         // Fetch the updated shop data from the database (important!)
+         $shop->refresh();
+     
+         return response()->json($shop, 200);
+     }
+     
 
     /**
      * Supprime une boutique spécifique.

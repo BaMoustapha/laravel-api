@@ -2,7 +2,7 @@
 
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 
@@ -30,14 +30,15 @@ Route::get('/hello', function () {
 use App\Http\Controllers\ShopController;
 
 Route::get('/shops', [ShopController::class, 'index']);
-    Route::post('/shops', [ShopController::class, 'store']);
+Route::post('/shops', [ShopController::class, 'store']);
+Route::get('/shops/{id}', [ShopController::class, 'show']);
+Route::put('/shops/{id}', [ShopController::class, 'update']);
+Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 
 Route::middleware('auth:api')->group(function () {
     // Routes de boutique protégées
     
-    Route::get('/shops/{id}', [ShopController::class, 'show']);
-    Route::put('/shops/{id}', [ShopController::class, 'update']);
-    Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
+    
 });
 
 use App\Http\Controllers\ProductController;
