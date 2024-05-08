@@ -32,7 +32,7 @@ use App\Http\Controllers\ShopController;
 Route::get('/shops', [ShopController::class, 'index']);
 Route::post('/shops', [ShopController::class, 'store']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
-Route::put('/shops/{id}', [ShopController::class, 'update']);
+Route::post('/shops/{id}', [ShopController::class, 'update']);
 Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 
 Route::middleware('auth:api')->group(function () {
