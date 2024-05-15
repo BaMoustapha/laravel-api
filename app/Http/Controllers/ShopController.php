@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 
@@ -142,5 +141,18 @@ class ShopController extends Controller
         $shop->delete();
 
         return response()->json(null, 204);
+    }
+
+     /**
+     * Affiche la liste des boutiques associées à l'utilisateur connecté.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userShops(Request $request)
+    {   $userId = auth()->id();
+        $user = $request->user(); // Récupérer l'utilisateur connecté
+        $userShops = $user->shops; // Récupérer les boutiques associées à l'utilisateur
+        return response()->json($userShops, 200);
     }
 }
