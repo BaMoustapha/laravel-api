@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('categories', function (Blueprint $table) {
-        //     $table->unsignedBigInteger('shop_id')->default(0);
-        //     $table->foreign('shop_id')->references('id')->on('shops');
+        // Schema::create('oauth_personal_access_clients', function (Blueprint $table) {
+        //     $table->bigIncrements('id');
+        //     $table->unsignedBigInteger('client_id');
+        //     $table->timestamps();
         // });
     }
 
@@ -22,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('oauth_personal_access_clients');
     }
 };
