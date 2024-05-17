@@ -11,10 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('categories', function (Blueprint $table) {
-        //     $table->unsignedBigInteger('shop_id')->default(0);
-        //     $table->foreign('shop_id')->references('id')->on('shops');
-        // });
+        //
     }
 
     /**
@@ -22,8 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };

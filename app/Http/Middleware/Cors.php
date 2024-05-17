@@ -16,6 +16,7 @@ class Cors
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
+    
     {
         $response = $next($request);
 
@@ -24,5 +25,6 @@ class Cors
         $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
 
         return $response;
+
     }
 }
