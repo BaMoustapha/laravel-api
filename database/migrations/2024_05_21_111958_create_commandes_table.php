@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('telephone');
             $table->string('ville');
             $table->string('adresse');
+            $table->string('prixProduit')->required();
+            $table->string('image')->required();
             $table->timestamps();
         });
     }
