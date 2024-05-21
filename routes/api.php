@@ -33,13 +33,16 @@ Route::get('/shops', [ShopController::class, 'index']);
 // Route::get('/user/shops', [ShopController::class, 'userShops']);
 Route::post('/shops', [ShopController::class, 'store']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
-Route::put('/shops/{id}', [ShopController::class, 'update']);
+Route::post('/shops/{id}', [ShopController::class, 'update']);
 Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 
+    Route::get('/shops/{id}', [ShopController::class, 'show']);
 Route::middleware('auth:api')->group(function () {
     // Routes de boutique protégées
+
     Route::get('/user/shops', [ShopController::class, 'userShops']);
     
+
 });
 
 use App\Http\Controllers\ProductController;
