@@ -54,7 +54,7 @@ class ShopController extends Controller
             'email' => 'nullable|email|max:255',
             'adresse' => 'nullable|string|max:255',
             'a_propos' => 'nullable|string',
-            'user_id' => 'nullable|exists:users,id'
+            'user_id' => 'nullable|integer|exists:users,id'
         ]);
 
             // // Obtenez l'utilisateur authentifié
@@ -75,11 +75,6 @@ class ShopController extends Controller
             $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
             $bannierePath = asset('storage/' . $bannierePath);
         }
-
-            // // Vérifier si l'utilisateur a déjà une boutique
-            // if ($user->shop) {
-            //     return response()->json(['message' => 'Vous avez déjà une boutique.'], 403);
-            // }
 
         $shop = Shop::create([
             'name' => $request->input('name'),

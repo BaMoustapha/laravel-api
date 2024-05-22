@@ -10,18 +10,29 @@ class Commande extends Model
     use HasFactory;
 
     protected $fillable = [
-        'statut',
-        'produits',
-        'total',
-        'prenom',
         'email',
+        'prenom',
+        'name',
         'telephone',
-        'ville',
         'adresse',
+        'ville',
+        'quantite',
+        'image',
+        'statut',
+        'prixProduit',
+        'prixTotal',
+        'product_id',
+        'prixLivraison',
+        'produits',
     ]
     ;
 
-    protected $casts = [
-        'produits' => 'json', // Conversion de la colonne 'produits' en JSON
-    ];
+    
+        public function commande()
+    {
+        return $this->belongsTo(Commande::class);
+    }
+    // protected $casts = [
+    //     'produits' => 'json', // Conversion de la colonne 'produits' en JSON
+    // ];
 }
