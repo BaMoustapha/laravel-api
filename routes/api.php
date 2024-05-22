@@ -34,12 +34,12 @@ Route::get('/shops/{id}', [ShopController::class, 'show']);
 Route::post('/shops/{id}', [ShopController::class, 'update']);
 Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
+Route::get('/shops', [ShopController::class, 'index']);
 Route::middleware('auth:api')->group(function () {
     Route::post('/shops', [ShopController::class, 'store']);
-    Route::get('/shops', [ShopController::class, 'index']);
+    Route::get('/user/shops', [ShopController::class, 'userShops']);
     // Routes de boutique protégées
 
-    Route::get('/user/shops', [ShopController::class, 'userShops']);
     
 
 });

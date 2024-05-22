@@ -36,14 +36,14 @@ class ShopController extends Controller
          $user = $request->user();
         
          // Vérifiez si l'utilisateur est authentifié
-        //  if (!$user) {
-        //      return response()->json(['message' => 'Utilisateur non authentifié.'], 401);
-        //  }
+         if (!$user) {
+             return response()->json(['message' => 'Utilisateur non authentifié.'], 401);
+         }
  
-        //  // Vérifier si l'utilisateur a déjà une boutique
-        //  if ($user->shop) {
-        //      return response()->json(['message' => 'Vous avez déjà une boutique.'], 403);
-        //  }
+         // Vérifier si l'utilisateur a déjà une boutique
+         if ($user->shop) {
+             return response()->json(['message' => 'Vous avez déjà une boutique.'], 403);
+         }
 
         $request->validate([
             'name' => 'nullable|string|max:255',
@@ -122,7 +122,7 @@ class ShopController extends Controller
          $shop = Shop::findOrFail($id);
      
          $validated = $request->validate([
-             'name' => 'nullable|string|max:255',
+             'name' => 'required|string|max:255',
              'description' => 'nullable|string',
              'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
              'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
