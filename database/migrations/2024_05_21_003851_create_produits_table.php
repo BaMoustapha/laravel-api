@@ -17,10 +17,10 @@ return new class extends Migration
                 $table->string('nom')->required();
                 $table->string('image')->required();
                 $table->text('description')->required();
-                $table->decimal('prix', 8, 2)->required();
+                $table->decimal('prix',2)->required();
                 $table->integer('quantite')->default(1)->required();
                 $table->unsignedBigInteger('categorie_id')->nullable();
-                $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
+                $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
                 $table->timestamps();
             });
         // }

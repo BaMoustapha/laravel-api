@@ -16,12 +16,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:categories',
+            'nom' => 'required|string|unique:categories',
             'shop_id' => 'nullable|exists:shops,id'
         ]);
 
         $category = Category::create([
-            'name' => $request->input('name'),
+            'nom' => $request->input('nom'),
             'shop_id' => $request->input('shop_id')
         ]);
 
@@ -39,7 +39,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|unique:categories,name,' . $category->id,
+            'nom' => 'required|unique:categories,nom,' . $category->id,
             'shop_id' => 'nullable|exists:shops,id',
         ]);
 
