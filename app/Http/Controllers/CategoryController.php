@@ -16,12 +16,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom' => 'required|string|unique:categories',
+            'name' => 'required|string|unique:categories',
             'shop_id' => 'nullable|exists:shops,id'
         ]);
 
         $category = Category::create([
-            'nom' => $request->input('nom'),
+            'name' => $request->input('name'),
             'shop_id' => $request->input('shop_id')
         ]);
 
