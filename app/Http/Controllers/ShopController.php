@@ -57,12 +57,12 @@ class ShopController extends Controller
             'user_id' => 'nullable|exists:users,id'
         ]);
 
-            // // Obtenez l'utilisateur authentifié
-            // $user = Auth::user();
-            // // Vérifiez si l'utilisateur est authentifié
-            // if (!$user) {
-            //     return response()->json(['message' => 'Utilisateur non authentifié.'], 401);
-            // }
+            // Obtenez l'utilisateur authentifié
+            $user = Auth::user();
+            // Vérifiez si l'utilisateur est authentifié
+            if (!$user) {
+                return response()->json(['message' => 'Utilisateur non authentifié.'], 401);
+            }
 
         $logoPath = null;
         if ($request->hasFile('logo')) {
@@ -176,7 +176,7 @@ class ShopController extends Controller
     public function userShops(Request $request)
     {   $userId = auth()->id();
         $user = $request->user(); // Récupérer l'utilisateur connecté
-        $userShops = $user->shops; // Récupérer les boutiques associées à l'utilisateur
+        $userShops = $user->shop; // Récupérer les boutiques associées à l'utilisateur
         return response()->json($userShops, 200);
     }
 }

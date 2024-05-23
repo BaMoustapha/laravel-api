@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('nom')->required();
+            $table->string('name')->required();
             $table->unsignedBigInteger('shop_id');
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->timestamps();

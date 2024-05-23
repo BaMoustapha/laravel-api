@@ -39,9 +39,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/shops', [ShopController::class, 'store']);
     Route::get('/user/shops', [ShopController::class, 'userShops']);
     // Routes de boutique protégées
-
-    
-
 });
 
 use App\Http\Controllers\ProductController;
