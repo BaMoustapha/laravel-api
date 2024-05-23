@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('adresse')->required();
             $table->string('email')->unique();
             $table->string('a_propos')->required();
-            $table->unsignedBigInteger('user_id')->required();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

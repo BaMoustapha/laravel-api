@@ -63,9 +63,15 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 use App\Http\Controllers\MessageController;
 
-
+// Endpoint des Messages
 Route::get('/messages', [MessageController::class, 'index']);
 Route::post('/messages', [MessageController::class, 'store']);
 Route::get('/messages/{id}', [MessageController::class, 'show']);
 Route::delete('/messages/{id}', [MessageController::class, 'destroy']);
+
+// Endpoint des Commandes
+Route::get('/commandes', [MessageController::class, 'index']);
+Route::post('/commandes', [MessageController::class, 'store']);
+Route::get('/commandes/{id}', [MessageController::class, 'show']);
+Route::delete('/commandes/{id}', [MessageController::class, 'destroy']);
 
