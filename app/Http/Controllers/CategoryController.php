@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $shopId = $request->query('shop_id');
+
+        if ($shopId) {
+            $categories = Category::where('shop_id', $shopId)->get();
+        } else {
+            $categories = Category::all();
+        }
+
         return response()->json($categories);
     }
 
@@ -39,7 +46,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $request->validate([
-            'nom' => 'required|unique:categories,nom,' . $category->id,
+            'name' => 'required|unique:categories,name,' . $category->id,
             'shop_id' => 'nullable|exists:shops,id',
         ]);
 
