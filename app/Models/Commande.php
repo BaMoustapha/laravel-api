@@ -17,20 +17,24 @@ class Commande extends Model
         'adresse',
         'ville',
         'quantite',
-        'image',
+         'image',
         'statut',
         'prixProduit',
         'prixTotal',
         'product_id',
         'prixLivraison',
-        'produits',
+         'produits',
     ]
     ;
 
+    protected $casts = [
+        'produits' => 'array', // Cast le champ en array
+    ];
+
     
-        public function commande()
+        public function product()
     {
-        return $this->belongsTo(Commande::class);
+        return $this->belongsTo(Product::class);
     }
     // protected $casts = [
     //     'produits' => 'json', // Conversion de la colonne 'produits' en JSON

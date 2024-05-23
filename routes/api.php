@@ -72,9 +72,11 @@ Route::post('/messages', [MessageController::class, 'store']);
 Route::get('/messages/{id}', [MessageController::class, 'show']);
 Route::delete('/messages/{id}', [MessageController::class, 'destroy']);
 
-// Endpoint des Commandes
-Route::get('/commandes', [MessageController::class, 'index']);
-Route::post('/commandes', [MessageController::class, 'store']);
-Route::get('/commandes/{id}', [MessageController::class, 'show']);
-Route::delete('/commandes/{id}', [MessageController::class, 'destroy']);
+// Endpoint des Commandes 
+use App\Http\Controllers\CommandeController;
+
+Route::get('/commandes', [CommandeController::class, 'index']);
+Route::post('/commandes', [CommandeController::class, 'store']);
+Route::get('/commandes/{id}', [CommandeController::class, 'show']);
+Route::delete('/commandes/{id}', [CommandeController::class, 'destroy']);
 
