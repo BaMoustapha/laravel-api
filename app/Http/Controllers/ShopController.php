@@ -175,11 +175,28 @@ class ShopController extends Controller
         $userShops = $user->shop; // Récupérer les boutiques associées à l'utilisateur
         return response()->json($userShops, 200);
     }
+// Pour verifier l'utilisateur est authentifie
+//     public function addCategoriesToShop(Request $request, $shopId)
+// {
+//     $user = Auth::user();
+//     $shop = Shop::where('user_id', $user->id)->findOrFail($shopId);
 
-    public function addCategoriesToShop(Request $request, $shopId)
+//     $validated = $request->validate([
+//         'categories' => 'required|array',
+//         'categories.*' => 'required|string|max:255'
+//     ]);
+
+//     foreach ($validated['categories'] as $categoryName) {
+//         $category = new Category(['name' => $categoryName]);
+//         $shop->categories()->save($category);
+//     }
+
+//     return response()->json(['message' => 'Catégories ajoutées avec succès à la boutique'], 201);
+// }
+
+public function addCategoriesToShop(Request $request, $shopId)
 {
-    $user = Auth::user();
-    $shop = Shop::where('user_id', $user->id)->findOrFail($shopId);
+    $shop = Shop::findOrFail($shopId);
 
     $validated = $request->validate([
         'categories' => 'required|array',
