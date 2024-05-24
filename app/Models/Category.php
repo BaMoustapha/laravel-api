@@ -17,7 +17,7 @@ class Category extends Model
     /**
      * Get the products for the category.
      */
-
+  // Relation belongsTo dans Category : Une catégorie appartient à une seule boutique.
     public function shop()
     {
         return $this->belongsTo(shop::class);
