@@ -77,3 +77,8 @@ Route::post('/commandes', [CommandeController::class, 'store']);
 Route::get('/commandes/{id}', [CommandeController::class, 'show']);
 Route::delete('/commandes/{id}', [CommandeController::class, 'destroy']);
 
+// Route::middleware(['auth'])->group(function () {
+    Route::post('/shops/{shopId}/categories', [ShopController::class, 'addCategoriesToShop']);
+    Route::get('/shops/{shopId}', [ShopController::class, 'getShopWithCategories']);
+    Route::get('/shops/{shopId}/categories',[ShopController::class, 'getShopCategories']);
+// });

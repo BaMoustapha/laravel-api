@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class ShopController extends Controller
 {
@@ -174,4 +175,32 @@ class ShopController extends Controller
         $userShops = $user->shop; // Récupérer les boutiques associées à l'utilisateur
         return response()->json($userShops, 200);
     }
+
+    public function addCategoriesToShop(Request $request, $shopId)
+{
+    $user = Auth::user();
+    $shop = Shop::where('user_id', $user->id)->findOrFail($shopId);
+
+    $validated = $request->validate([
+        'categories' => 'required|array',
+        'categories.*' => 'required|string|max:255'
+    ]);
+
+    foreach ($validated['categories'] as $categoryName) {
+        $category = new Category(['name' => $categoryName]);
+        $shop->categories()->save($category);
+    }
+
+    return response()->json(['message' => 'Catégories ajoutées avec succès à la boutique'], 201);
+}
+
+public function getShopCategories($shopId)
+{
+    $shop = Shop::findOrFail($shopId);
+
+    $categories = $shop->categories;
+
+    return response()->json($categories, 200);
+}
+
 }

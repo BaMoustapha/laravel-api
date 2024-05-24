@@ -4,19 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $shopId = $request->query('shop_id');
 
-        if ($shopId) {
-            $categories = Category::where('shop_id', $shopId)->get();
-        } else {
             $categories = Category::all();
-        }
-
         return response()->json($categories);
     }
 
@@ -34,6 +31,39 @@ class CategoryController extends Controller
 
         return response()->json($category, 201);
     }
+
+
+
+//     class ShopController extends Controller
+// {
+//     // premiere Partie
+//     public function addCategoriesToShop(Request $request, $shopId)
+// {
+//     $user = Auth::user();
+//     $shop = Shop::where('user_id', $user->id)->findOrFail($shopId);
+
+//     $validated = $request->validate([
+//         'categories' => 'required|array',
+//         'categories.*' => 'required|string|max:255'
+//     ]);
+
+//     foreach ($validated['categories'] as $categoryName) {
+//         $category = new Category(['name' => $categoryName]);
+//         $shop->categories()->save($category);
+//     }
+
+//     return response()->json(['message' => 'Catégories ajoutées avec succès à la boutique'], 201);
+// }
+
+// deuxiem Partie
+    // public function getShopWithCategories($shopId)
+    // {
+    //     $user = Auth::user();
+    //     $shop = Shop::where('user_id', $user->id)->with('categories')->findOrFail($shopId);
+
+    //     return response()->json($shop);
+    // }
+
 
     public function show($id)
     {
