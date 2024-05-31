@@ -203,12 +203,18 @@ public function addCategoriesToShop(Request $request, $shopId)
         'categories.*' => 'required|string|max:255'
     ]);
 
+    $createdCategories = [];
+
     foreach ($validated['categories'] as $categoryName) {
         $category = new Category(['name' => $categoryName]);
         $shop->categories()->save($category);
+        $createdCategories[] = $category;
     }
 
-    return response()->json(['message' => 'Catégories ajoutées avec succès à la boutique'], 201);
+    return response()->json([
+        'message' => 'Catégories ajoutées avec succès à la boutique',
+        'categories' => $createdCategories 
+    ], 201);
 }
 
 public function getShopCategories($shopId)
