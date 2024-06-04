@@ -21,12 +21,12 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        // 'prenom',
+         'prenom',
         'name',
         'email',
         'password',
-        // 'adresse',
-        // 'telephone'
+         'adresse',
+         'telephone'
     ];
 
     /**
@@ -70,13 +70,11 @@ class User extends Authenticatable implements JWTSubject
 
 
 
+    public function shop()
+    {
+        return $this->hasOne(Shop::class, 'user_id');
 
-
-
-    // public function shops()
-    // {
-    //     return $this->hasMany(Shop::class);
-    // }
+    }
 
 }
 

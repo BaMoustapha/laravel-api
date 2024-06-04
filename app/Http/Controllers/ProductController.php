@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom' => 'required|string',
+            'name' => 'required|string',
             'image' => 'required|image',
             'description' => 'required|string',
             'prix' => 'required|numeric',
@@ -41,7 +41,7 @@ class ProductController extends Controller
         $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
 
         $product = Product::create([
-            'nom' => $request->input('nom'),
+            'name' => $request->input('name'),
             'description' => $request->input('description'),
             'image' => $imagePath,
             'prix' => $request->input('prix'),
@@ -75,22 +75,22 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $request->validate([
-            'nom' => 'required|string',
+       $data = $request->validate([
+            'name' => 'required|string',
             'description' => 'required|string',
             'prix' => 'required|numeric',
             'quantite' => 'required|integer',
-            'categorie_id' => 'required|exists:categories,id',
+            'categorie_id' => 'required|integer|exists:categories,id',
             'image' => 'nullable|image', // Optional image validation
         ]);
 
-        $data = [
-            'nom' => $request->input('nom'),
-            'description' => $request->input('description'),
-            'prix' => $request->input('prix'),
-            'quantite' => $request->input('quantite'),
-            'categorie_id' => $request->input('categorie_id'),
-        ];
+        // $data = [
+        //     'name' => $request->input('name'),
+        //     'description' => $request->input('description'),
+        //     'prix' => $request->input('prix'),
+        //     'quantite' => $request->input('quantite'),
+        //     'categorie_id' => $request->input('categorie_id'),
+        // ];
 
         // Manage image update if a new image is provided
         if ($request->hasFile('image')) {
@@ -102,6 +102,7 @@ class ProductController extends Controller
         }
 
         $product->update($data);
+        $product->refresh();
 
         return response()->json($product, 200);
     }

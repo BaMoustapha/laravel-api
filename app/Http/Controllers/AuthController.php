@@ -145,6 +145,8 @@ class AuthController extends Controller
     }
 }
 
+
+
 }
 
 
@@ -246,3 +248,64 @@ class AuthController extends Controller
 //         ]);
 //     }
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// public function store(Request $request)
+//     {
+
+
+//         $user = $request->user;
+
+//         $request->validate([
+//             'name' => 'required|string|unique:shops|max:255',
+//             'description' => 'nullable|string',
+//             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Logo : JPEG, PNG, max 2 Mo
+//             'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+//             'telephone' => 'nullable|string|max:255',
+//             'email' => 'nullable|email|max:255',
+//             'adresse' => 'nullable|string|max:255',
+//             'a_propos' => 'nullable|string',
+//             'user_id' => 'nullable|exists:users,id'
+//         ]);
+
+//         $logoPath = null;
+//         if ($request->hasFile('logo')) {
+//             $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
+//             $logoPath = asset('storage/' . $logoPath);
+//         }
+
+//         $bannierePath = null;
+//         if ($request->hasFile('banniere')) {
+//             $bannierePath = Storage::disk('public')->put('images/posts/banniere-images', $request->file('banniere'));
+//             $bannierePath = asset('storage/' . $bannierePath);
+//         }
+
+//         $shop = Shop::create([
+//             'name' => $request->input('name'),
+//             'description' => $request->input('description'),
+//             'logo' => $logoPath,
+//             'banniere' => $bannierePath,
+//             'telephone' => $request->input('telephone'),
+//             'email' => $request->input('email'),
+//             'adresse' => $request->input('adresse'),
+//             'a_propos' => $request->input('a_propos'),
+//             'user_id' => $request->input('user_id')
+//         ]);
+
+//         // Retourner la réponse JSON avec les URL des images
+//         return response()->json($shop, 201);
+//     }

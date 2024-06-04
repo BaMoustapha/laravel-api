@@ -29,16 +29,17 @@ Route::get('/hello', function () {
 
 use App\Http\Controllers\ShopController;
 
-Route::get('/shops', [ShopController::class, 'index']);
-Route::post('/shops', [ShopController::class, 'store']);
+// Route::get('/user/shops', [ShopController::class, 'userShops']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
 Route::post('/shops/{id}', [ShopController::class, 'update']);
 Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
-
+Route::get('/shops/{id}', [ShopController::class, 'show']);
+Route::get('/shops', [ShopController::class, 'index']);
 Route::middleware('auth:api')->group(function () {
+    Route::post('/shops', [ShopController::class, 'store']);
+    Route::get('/user/shops', [ShopController::class, 'userShops']);
+    Route::get('shops/user/{id}', [ShopController::class, 'checkUserShop']);
     // Routes de boutique protégées
-    
-    
 });
 
 use App\Http\Controllers\ProductController;
@@ -63,9 +64,22 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 use App\Http\Controllers\MessageController;
 
-
+// Endpoint des Messages
 Route::get('/messages', [MessageController::class, 'index']);
 Route::post('/messages', [MessageController::class, 'store']);
 Route::get('/messages/{id}', [MessageController::class, 'show']);
 Route::delete('/messages/{id}', [MessageController::class, 'destroy']);
 
+// Endpoint des Commandes 
+use App\Http\Controllers\CommandeController;
+
+Route::get('/commandes', [CommandeController::class, 'index']);
+Route::post('/commandes', [CommandeController::class, 'store']);
+Route::get('/commandes/{id}', [CommandeController::class, 'show']);
+Route::delete('/commandes/{id}', [CommandeController::class, 'destroy']);
+
+// Route::middleware(['auth'])->group(function () {
+    Route::post('/shops/{shopId}/categories', [ShopController::class, 'addCategoriesToShop']);
+    Route::get('/shops/{shopId}', [ShopController::class, 'getShopWithCategories']);
+    Route::get('/shops/{shopId}/categories',[ShopController::class, 'getShopCategories']);
+// });

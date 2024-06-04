@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->string('statut');
-            $table->json('produits');
-            $table->decimal('total', 10, 2); 
+             $table->string('statut');
+             $table->json('produits');
+            $table->decimal('prixTotal', 10, 2); 
             $table->string('prenom');
             $table->string('email');
             $table->string('telephone');
             $table->string('ville');
             $table->string('adresse');
+            $table->decimal('prixProduit', 10, 2)->required();
+             $table->string('image')->required();
             $table->timestamps();
         });
     }
