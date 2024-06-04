@@ -169,7 +169,18 @@ class ShopController extends Controller
         $userShops = $user->shop; // Récupérer les boutiques associées à l'utilisateur
         return response()->json($userShops, 200);
     }
-// Pour verifier l'utilisateur est authentifie
+// Pour verifier si l'utilisateur a un boutique 
+
+public function checkUserShop($id)
+    {
+        $shop = Shop::where('user_id', $id)->first();
+
+        if ($shop) {
+            return response()->json(['hasShop' => true], 200);
+        } else {
+            return response()->json(['hasShop' => false], 200);
+        }
+    }
 //     public function addCategoriesToShop(Request $request, $shopId)
 // {
 //     $user = Auth::user();
@@ -197,12 +208,18 @@ public function addCategoriesToShop(Request $request, $shopId)
         'categories.*' => 'required|string|max:255'
     ]);
 
+    $createdCategories = [];
+
     foreach ($validated['categories'] as $categoryName) {
         $category = new Category(['name' => $categoryName]);
         $shop->categories()->save($category);
+        $createdCategories[] = $category;
     }
 
-    return response()->json(['message' => 'Catégories ajoutées avec succès à la boutique'], 201);
+    return response()->json([
+        'message' => 'Catégories ajoutées avec succès à la boutique',
+        'categories' => $createdCategories 
+    ], 201);
 }
 
 public function getShopCategories($shopId)
