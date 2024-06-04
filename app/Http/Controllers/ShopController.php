@@ -58,13 +58,7 @@ class ShopController extends Controller
             'user_id' => 'nullable|integer|exists:users,id'
         ]);
 
-            // Obtenez l'utilisateur authentifié
-            $user = Auth::user();
-            // Vérifiez si l'utilisateur est authentifié
-            if (!$user) {
-                return response()->json(['message' => 'Utilisateur non authentifié.'], 401);
-            }
-
+           
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
