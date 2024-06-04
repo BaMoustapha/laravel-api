@@ -175,7 +175,18 @@ class ShopController extends Controller
         $userShops = $user->shop; // Récupérer les boutiques associées à l'utilisateur
         return response()->json($userShops, 200);
     }
-// Pour verifier l'utilisateur est authentifie
+// Pour verifier si l'utilisateur a un boutique 
+
+public function checkUserShop($id)
+    {
+        $shop = Shop::where('user_id', $id)->first();
+
+        if ($shop) {
+            return response()->json(['hasShop' => true], 200);
+        } else {
+            return response()->json(['hasShop' => false], 200);
+        }
+    }
 //     public function addCategoriesToShop(Request $request, $shopId)
 // {
 //     $user = Auth::user();
