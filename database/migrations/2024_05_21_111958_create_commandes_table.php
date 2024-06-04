@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('ville');
             $table->string('adresse');
             $table->decimal('prixProduit', 10, 2)->required();
-             $table->string('image')->required();
+            //  $table->string('image')->nullable();
             $table->timestamps();
         });
     }

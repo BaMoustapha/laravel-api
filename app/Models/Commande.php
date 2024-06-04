@@ -17,17 +17,18 @@ class Commande extends Model
         'adresse',
         'ville',
         'quantite',
-         'image',
+        // 'image',
         'statut',
         'prixProduit',
         'prixTotal',
         'product_id',
         'prixLivraison',
-         'produits',
+        'produits',
     ]
     ;
 
     protected $casts = [
+        'product_id' => 'array',
         'produits' => 'array', // Cast le champ en array
     ];
 
