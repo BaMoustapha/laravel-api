@@ -58,12 +58,7 @@ class ShopController extends Controller
             'user_id' => 'nullable|integer|exists:users,id'
         ]);
 
-            // Obtenez l'utilisateur authentifié
-            $user = Auth::user();
-            // Vérifiez si l'utilisateur est authentifié
-            if (!$user) {
-                return response()->json(['message' => 'Utilisateur non authentifié.'], 401);
-            }
+            
 
         $logoPath = null;
         if ($request->hasFile('logo')) {
@@ -103,6 +98,23 @@ class ShopController extends Controller
     {
         $shop = Shop::findOrFail($id);
         return response()->json($shop, 200);
+    }
+
+    /**
+     * Affiche les détails d'une boutique spécifique par son nom.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function showByName($name)
+    {
+        $shop = Shop::where('name', $name)->first();
+
+        if ($shop) {
+            return response()->json($shop, 200);
+        } else {
+            return response()->json(['message' => 'Shop not found'], 404);
+        }
     }
 
     /**

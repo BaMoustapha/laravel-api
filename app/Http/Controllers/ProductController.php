@@ -38,7 +38,12 @@ class ProductController extends Controller
         ]);
 
         // Gestion de l'enregistrement de l'image
-        $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
+        // $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = Storage::disk('public')->put('images/posts/image-images', $request->file('image'));
+            $imagePath = asset('storage/' . $imagePath);
+        }
 
         $product = Product::create([
             'name' => $request->input('name'),
