@@ -38,6 +38,7 @@ class ProductController extends Controller
         ]);
 
         // Gestion de l'enregistrement de l'image
+
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = Storage::disk('public')->put('images/posts/image-images', $request->file('image'));

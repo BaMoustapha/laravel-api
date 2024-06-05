@@ -58,7 +58,12 @@ class ShopController extends Controller
             'user_id' => 'nullable|integer|exists:users,id'
         ]);
 
+<<<<<<< HEAD
+            
+
+=======
            
+>>>>>>> cb5c74195b9f7fe7a855540fc3f13060e3fe2afc
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));
@@ -97,6 +102,23 @@ class ShopController extends Controller
     {
         $shop = Shop::findOrFail($id);
         return response()->json($shop, 200);
+    }
+
+    /**
+     * Affiche les détails d'une boutique spécifique par son nom.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function showByName($name)
+    {
+        $shop = Shop::where('name', $name)->first();
+
+        if ($shop) {
+            return response()->json($shop, 200);
+        } else {
+            return response()->json(['message' => 'Shop not found'], 404);
+        }
     }
 
     /**
