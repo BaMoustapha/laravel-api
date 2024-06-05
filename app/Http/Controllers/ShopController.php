@@ -114,8 +114,8 @@ class ShopController extends Controller
          $validated = $request->validate([
              'name' => 'required|string|max:255',
              'description' => 'nullable|string',
-             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-             'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+             'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+             'banniere' => 'required|image|mimes:jpeg,png,jpg|max:2048',
              'telephone' => 'nullable|string|max:255',
              'email' => 'nullable|email|max:255',
              'adresse' => 'nullable|string|max:255',

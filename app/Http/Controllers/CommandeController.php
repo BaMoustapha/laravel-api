@@ -46,7 +46,11 @@ class CommandeController extends Controller
         // 'product_id' => 'required|json',
     ]);
 
-    //$imagePath = Storage::disk('public')->put('images/posts/commande-images', $request->file('image'));
+    $commandePath = null;
+        if ($request->hasFile('commande')) {
+            $commandePath = Storage::disk('public')->put('images/posts/commande-images', $request->file('commande'));
+            $commandePath = asset('storage/' . $commandePath);
+        }
 
     $commande = Commande::create([
         'prenom' => $request->input('prenom'),
