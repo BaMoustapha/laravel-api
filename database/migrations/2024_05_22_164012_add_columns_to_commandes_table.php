@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('prixLivraison');
-            $table->string('quantite');
+            $table->integer('quantite');
         });
     }
 
