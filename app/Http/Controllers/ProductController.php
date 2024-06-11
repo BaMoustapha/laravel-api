@@ -34,7 +34,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'prix' => 'required|numeric',
             'quantite' => 'required|integer',
-            'categorie_id' => 'required|exists:categories,id'
+            'categorie_id.*' => 'required|exists:categories,id'
         ]);
 
         // Gestion de l'enregistrement de l'image

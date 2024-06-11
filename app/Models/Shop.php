@@ -18,7 +18,7 @@ class Shop extends Model
         'telephone',
         'email',
         'adresse',
-        'a_propos'
+        'a_propos',
     ];
 
     public function user()
@@ -29,6 +29,16 @@ class Shop extends Model
     public function categories()
     {
         return $this->hasMany(Category::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
 }

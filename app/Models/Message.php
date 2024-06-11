@@ -14,7 +14,9 @@ class Message extends Model
         'email',
         'telephone',
         'body',
+        'shop_id'
     ];
 
+  
     
 }

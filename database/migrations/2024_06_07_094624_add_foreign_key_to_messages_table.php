@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('messages', function (Blueprint $table) {
             $table->unsignedBigInteger('shop_id');
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
         });
@@ -21,10 +21,9 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {      
-        Schema::table('categories', function (Blueprint $table) {
-            $table->dropForeign(['shop_id']);
-            $table->dropColumn('shop_id');
+    {
+        Schema::table('messages', function (Blueprint $table) {
+            //
         });
     }
 };

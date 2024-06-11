@@ -16,6 +16,7 @@ class Product extends Model
         'prix',
         'quantite',
         'categorie_id',
+        'shop_id'
     ];
 
     /**
