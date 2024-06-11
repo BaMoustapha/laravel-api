@@ -25,8 +25,6 @@ Route::get('/hello', function () {
 });
 
 
-
-
 use App\Http\Controllers\ShopController;
 
 // Route::get('/user/shops', [ShopController::class, 'userShops']);
@@ -36,8 +34,6 @@ Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
 Route::get('/shops', [ShopController::class, 'index']);
 Route::get('/shops/name/{name}', [ShopController::class, 'showByName']);
-
-Route::get('/shops', [ShopController::class, 'index']);
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/shops', [ShopController::class, 'store']);
     Route::get('/user/shops', [ShopController::class, 'userShops']);

@@ -17,6 +17,9 @@ class Message extends Model
         'shop_id'
     ];
 
-  
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
     
 }

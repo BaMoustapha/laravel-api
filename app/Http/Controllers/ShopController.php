@@ -57,8 +57,6 @@ class ShopController extends Controller
         ]);
 
 
-            
-
 
         $logoPath = null;
         if ($request->hasFile('logo')) {
@@ -263,7 +261,7 @@ public function getShopCategories($shopId)
 //     ], 201);
 // }
 
-public function addMessagesToShop(Request $request, $shopId)
+/*public function addMessagesToShop(Request $request, $shopId)
 {
     $shop = Shop::findOrFail($shopId);
 
@@ -282,7 +280,7 @@ public function addMessagesToShop(Request $request, $shopId)
         'message_data' => $message
     ], 201);
 }
-
+*/
 
 public function getShopMessages($shopId)
 {

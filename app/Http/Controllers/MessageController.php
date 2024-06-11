@@ -30,7 +30,8 @@ class MessageController extends Controller
             'prenom' => 'required|string|max:255',
             'telephone' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
-            'body' => 'required|string'
+            'body' => 'required|string',
+            'shop_id' => 'nullable|integer|exists:shops,id'
         ]);
 
 
@@ -39,6 +40,7 @@ class MessageController extends Controller
             'email' => $request->input('email'),
             'telephone' => $request->input('telephone'),
             'body' => $request->input('body'),
+            'shop_id' => $request->input('shop_id') // Add validation for shop_id
         ]);
 
         return response()->json($message, 201);

@@ -43,7 +43,6 @@ class CommandeController extends Controller
          'product_id.*' => 'required|exists:products,id',
         'prixLivraison' => 'required|string',
         'produits' => 'required|json',
-        // 'product_id' => 'required|json',
     ]);
 
     $commandePath = null;
