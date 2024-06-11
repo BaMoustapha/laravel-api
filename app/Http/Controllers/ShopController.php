@@ -58,12 +58,7 @@ class ShopController extends Controller
             'user_id' => 'nullable|integer|exists:users,id'
         ]);
 
-<<<<<<< HEAD
-            
 
-=======
-           
->>>>>>> cb5c74195b9f7fe7a855540fc3f13060e3fe2afc
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = Storage::disk('public')->put('images/posts/logo-images', $request->file('logo'));

@@ -17,7 +17,7 @@ class Commande extends Model
         'adresse',
         'ville',
         'quantite',
-        // 'image',
+        'image',
         'statut',
         'prixProduit',
         'prixTotal',
