@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Message;
+use App\Models\Product;
 
 class ShopController extends Controller
 {
@@ -32,16 +34,12 @@ class ShopController extends Controller
     {
 
 
-        // $user = $request->user();
-         // Obtenez l'utilisateur authentifié
          $user = $request->user();
         
-         // Vérifiez si l'utilisateur est authentifié
          if (!$user) {
              return response()->json(['message' => 'Utilisateur non authentifié.'], 401);
          }
  
-         // Vérifier si l'utilisateur a déjà une boutique
          if ($user->shop) {
              return response()->json(['message' => 'Vous avez déjà une boutique.'], 403);
          }
@@ -49,7 +47,7 @@ class ShopController extends Controller
         $request->validate([
             'name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Logo : JPEG, PNG, max 2 Mo
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'telephone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
@@ -57,6 +55,7 @@ class ShopController extends Controller
             'a_propos' => 'nullable|string',
             'user_id' => 'nullable|integer|exists:users,id'
         ]);
+
 
 
         $logoPath = null;
@@ -86,6 +85,8 @@ class ShopController extends Controller
         // Retourner la réponse JSON avec les URL des images
         return response()->json($shop, 201);
     }
+
+   
 
     /**
      * Affiche les détails d'une boutique spécifique.
@@ -131,8 +132,8 @@ class ShopController extends Controller
          $validated = $request->validate([
              'name' => 'required|string|max:255',
              'description' => 'nullable|string',
-             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-             'banniere' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+             'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+             'banniere' => 'required|image|mimes:jpeg,png,jpg|max:2048',
              'telephone' => 'nullable|string|max:255',
              'email' => 'nullable|email|max:255',
              'adresse' => 'nullable|string|max:255',
@@ -198,23 +199,7 @@ public function checkUserShop($id)
             return response()->json(['hasShop' => false], 200);
         }
     }
-//     public function addCategoriesToShop(Request $request, $shopId)
-// {
-//     $user = Auth::user();
-//     $shop = Shop::where('user_id', $user->id)->findOrFail($shopId);
 
-//     $validated = $request->validate([
-//         'categories' => 'required|array',
-//         'categories.*' => 'required|string|max:255'
-//     ]);
-
-//     foreach ($validated['categories'] as $categoryName) {
-//         $category = new Category(['name' => $categoryName]);
-//         $shop->categories()->save($category);
-//     }
-
-//     return response()->json(['message' => 'Catégories ajoutées avec succès à la boutique'], 201);
-// }
 
 public function addCategoriesToShop(Request $request, $shopId)
 {
@@ -248,4 +233,86 @@ public function getShopCategories($shopId)
     return response()->json($categories, 200);
 }
 
+
+// Pour les messages associe a une boutique specifique
+
+// public function addMessagesToShop(Request $request, $shopId)
+// {
+//     $shop = Shop::findOrFail($shopId);
+
+//     $validated = $request->validate([
+//         'prenom' => 'required|string|max:255',
+//         'email' => 'required|email|max:255',
+//         'telephone' => 'required|string|max:15',
+//         'body' => 'required|string|max:255',
+//     ]);
+
+//     $createdMessages = [];
+
+//     foreach ($validated['messages'] as $messageData) {
+//         $message = new Message($messageData);
+//         $shop->messages()->save($message);
+//         $createdMessages[] = $message;
+//     }
+
+//     return response()->json([
+//         'message' => 'Messages ajoutés avec succès à la boutique',
+//         'messages' => $createdMessages
+//     ], 201);
+// }
+
+public function addMessagesToShop(Request $request, $shopId)
+{
+    $shop = Shop::findOrFail($shopId);
+
+    $validated = $request->validate([
+        'prenom' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'telephone' => 'required|string|max:15',
+        'body' => 'required|string|max:255',
+    ]);
+
+    $message = new Message($validated);
+    $shop->messages()->save($message);
+
+    return response()->json([
+        'message' => 'Message ajouté avec succès à la boutique',
+        'message_data' => $message
+    ], 201);
+}
+
+
+public function getShopMessages($shopId)
+{
+    $shop = Shop::findOrFail($shopId);
+
+    $messages = $shop->messages;
+
+    return response()->json($messages, 200);
+}
+
+// POUR LES PRODUITS
+
+// public function addProductsToShop(Request $request, $shopId)
+// {
+//     $shop = Shop::findOrFail($shopId);
+
+//     $validated = $request->validate([
+        
+//         'name' => 'required|string|max:255',
+//         'image' => 'required|string|max:255',
+//         'description' => 'required|string|max:255',
+//         'prix' => 'required|string|max:255',
+//         'quantite' => 'required|string|max:255',
+
+//     ]);
+
+//     $product = new Product($validated);
+//     $shop->products()->save($product);
+
+//     return response()->json([
+//         'message' => 'product ajouté avec succès à la boutique',
+//         'message' => $product
+//     ], 201);
+// }
 }

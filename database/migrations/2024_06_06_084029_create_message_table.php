@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('commandes', function (Blueprint $table) {
-            $table->string('image')->default('default_image.png')->change();
+        Schema::create('messages', function (Blueprint $table) {
+            $table->id();
+            $table->string('telephone');
+            $table->string('email');
+            $table->string('prenom');
+            $table->string('body');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('commandes', function (Blueprint $table) {
-            $table->string('image')->default(null)->change();
-        });
+        Schema::dropIfExists('messages');
     }
 };

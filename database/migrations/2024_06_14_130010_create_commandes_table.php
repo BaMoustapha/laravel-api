@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-             $table->string('statut');
-             $table->json('produits');
+            $table->string('statut');
+            $table->json('produits');
             $table->decimal('prixTotal', 10, 2); 
             $table->string('prenom');
             $table->string('email');
@@ -22,7 +22,11 @@ return new class extends Migration
             $table->string('ville');
             $table->string('adresse');
             $table->decimal('prixProduit', 10, 2)->required();
-            //  $table->string('image')->nullable();
+            $table->string('name');
+            $table->string('prixLivraison');
+            $table->integer('quantite');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -14,7 +14,12 @@ class Message extends Model
         'email',
         'telephone',
         'body',
+        'shop_id'
     ];
 
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
     
 }

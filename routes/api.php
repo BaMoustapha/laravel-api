@@ -32,14 +32,10 @@ Route::get('/shops/{id}', [ShopController::class, 'show']);
 Route::post('/shops/{id}', [ShopController::class, 'update']);
 Route::delete('/shops/{id}', [ShopController::class, 'destroy']);
 Route::get('/shops/{id}', [ShopController::class, 'show']);
-
 Route::get('/shops', [ShopController::class, 'index']);
 Route::get('/shops/name/{name}', [ShopController::class, 'showByName']);
-
-
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/shops', [ShopController::class, 'store']);
-    Route::get('/shops', [ShopController::class, 'index']);
     Route::get('/user/shops', [ShopController::class, 'userShops']);
     Route::get('shops/user/{id}', [ShopController::class, 'checkUserShop']);
     // Routes de boutique protégées
@@ -86,3 +82,11 @@ Route::delete('/commandes/{id}', [CommandeController::class, 'destroy']);
 Route::post('/shops/{shopId}/categories', [ShopController::class, 'addCategoriesToShop']);
 Route::get('/shops/{shopId}', [ShopController::class, 'getShopWithCategories']);
 Route::get('/shops/{shopId}/categories',[ShopController::class, 'getShopCategories']);
+
+
+Route::post('/shops/{shopId}/messages', [ShopController::class, 'addMessagesToShop']);
+Route::get('/shops/{shopId}/messages',[ShopController::class, 'getShopMessages']);
+Route::get('/shops/{shopId}', [ShopController::class, 'getShopWithMessages']);
+
+// Route::post('/shops/{shopId}/products', [ShopController::class, 'addProductsToShop']);
+// Route::post('/shops/{shopId}/products', [ShopController::class, 'addProductsToShop']);

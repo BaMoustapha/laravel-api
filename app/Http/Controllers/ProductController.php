@@ -34,11 +34,11 @@ class ProductController extends Controller
             'description' => 'required|string',
             'prix' => 'required|numeric',
             'quantite' => 'required|integer',
-            'categorie_id' => 'required|exists:categories,id'
+            'categorie_id.*' => 'required|exists:categories,id'
         ]);
 
         // Gestion de l'enregistrement de l'image
-        // $imagePath = Storage::disk('public')->put('images/posts/product-images', $request->file('image'));
+
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = Storage::disk('public')->put('images/posts/image-images', $request->file('image'));
