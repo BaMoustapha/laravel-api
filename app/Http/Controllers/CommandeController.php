@@ -26,7 +26,7 @@ class CommandeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+ /*   public function store(Request $request)
 {
     $request->validate([
         'email' => 'required|email',
@@ -35,12 +35,12 @@ class CommandeController extends Controller
         'telephone' => 'required|numeric',
         'adresse' => 'required|string',
         'quantite' => 'required|integer',
-        // 'image' => 'required|image',
+         //'image' => 'required|image',
         'statut' => 'required|string',
         'ville' => 'required|string',
         'prixProduit' => 'required|numeric',
         'prixTotal' => 'required|numeric',
-         'product_id.*' => 'required|exists:products,id',
+        'product_id.*' => 'required|exists:products,id',
         'prixLivraison' => 'required|string',
         'produits' => 'required|json',
     ]);
@@ -59,7 +59,7 @@ class CommandeController extends Controller
         'adresse' => $request->input('adresse'),
         'quantite' => $request->input('quantite'),
         'statut' => $request->input('statut'),
-        // 'image' => $imagePath,
+         //'image' => $imagePath,
         'ville' => $request->input('ville'),
         'prixProduit' => $request->input('prixProduit'),
         'prixTotal' => $request->input('prixTotal'),
@@ -70,6 +70,30 @@ class CommandeController extends Controller
 
     return response()->json($commande, 201);
 }
+*/
+
+public function store(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'prenom' => 'required|string',
+        'name' => 'required|string',
+        'telephone' => 'required|string',
+        'adresse' => 'required|string',
+        'ville' => 'required|string',
+        'quantite' => 'required|integer',
+        'statut' => 'required|string',
+        'prixProduit' => 'required|numeric',
+        'prixTotal' => 'required|numeric',
+        'product_id' => 'required|exists:products,id',
+        'prixLivraison' => 'required|numeric',
+        'produits' => 'required|array',
+    ]);
+
+    $commande = Commande::create($request->all());
+    return response()->json($commande, 201);
+}
+
 
 /**
      * Affiche les détails d'un produit.

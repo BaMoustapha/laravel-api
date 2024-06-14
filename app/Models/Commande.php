@@ -17,7 +17,7 @@ class Commande extends Model
         'adresse',
         'ville',
         'quantite',
-        'image',
+        //'image',
         'statut',
         'prixProduit',
         'prixTotal',
@@ -28,8 +28,8 @@ class Commande extends Model
     ;
 
     protected $casts = [
-        'product_id' => 'array',
-        'produits' => 'array', // Cast le champ en array
+         'product_id' => 'array',
+        'produits' => 'array', 
     ];
 
     
@@ -37,7 +37,4 @@ class Commande extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    // protected $casts = [
-    //     'produits' => 'json', // Conversion de la colonne 'produits' en JSON
-    // ];
 }
