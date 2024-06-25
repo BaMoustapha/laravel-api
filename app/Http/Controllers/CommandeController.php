@@ -26,7 +26,7 @@ class CommandeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
- /*   public function store(Request $request)
+    public function store(Request $request)
 {
     $request->validate([
         'email' => 'required|email',
@@ -40,7 +40,7 @@ class CommandeController extends Controller
         'ville' => 'required|string',
         'prixProduit' => 'required|numeric',
         'prixTotal' => 'required|numeric',
-        'product_id.*' => 'required|exists:products,id',
+        'product_id' => 'required|exists:products,id',
         'prixLivraison' => 'required|string',
         'produits' => 'required|json',
     ]);
@@ -50,7 +50,7 @@ class CommandeController extends Controller
             $commandePath = Storage::disk('public')->put('images/posts/commande-images', $request->file('commande'));
             $commandePath = asset('storage/' . $commandePath);
         }
-
+        
     $commande = Commande::create([
         'prenom' => $request->input('prenom'),
         'name' => $request->input('name'),
@@ -67,32 +67,40 @@ class CommandeController extends Controller
         'produits' => $request->input('produits'),
         'product_id' => $request->input('product_id')
     ]);
+    $commandeData = $request->all();  // Récupère toutes les données validées
+    $commandeData['produits'] = json_encode($commandeData['produits']); // Convertir produits to JSON
+  
+    $commande = Commande::create($commandeData);
+
+    // $commandeData = $request->validated();
+    // $commandeData['produits'] = json_encode($commandeData['produits']); // Convert produits to JSON
+    // $commande = Commande::create($commandeData);
 
     return response()->json($commande, 201);
 }
-*/
 
-public function store(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'prenom' => 'required|string',
-        'name' => 'required|string',
-        'telephone' => 'required|string',
-        'adresse' => 'required|string',
-        'ville' => 'required|string',
-        'quantite' => 'required|integer',
-        'statut' => 'required|string',
-        'prixProduit' => 'required|numeric',
-        'prixTotal' => 'required|numeric',
-        'product_id' => 'required|exists:products,id',
-        'prixLivraison' => 'required|numeric',
-        'produits' => 'required|array',
-    ]);
 
-    $commande = Commande::create($request->all());
-    return response()->json($commande, 201);
-}
+// public function store(Request $request)
+// {
+//     $request->validate([
+//         'email' => 'required|email',
+//         'prenom' => 'required|string',
+//         'name' => 'required|string',
+//         'telephone' => 'required|string',
+//         'adresse' => 'required|string',
+//         'ville' => 'required|string',
+//         'quantite' => 'required|integer',
+//         'statut' => 'required|string',
+//         'prixProduit' => 'required|numeric',
+//         'prixTotal' => 'required|numeric',
+//         'product_id' => 'required|exists:products,id',
+//         'prixLivraison' => 'required|numeric',
+//          'produits' => 'required|array',
+//     ]);
+
+//     $commande = Commande::create($request->all());
+//     return response()->json($commande, 201);
+// }
 
 
 /**
