@@ -28,7 +28,7 @@ class Commande extends Model
     ;
 
     protected $casts = [
-         'product_id' => 'array',
+        // 'product_id' => 'array',
         'produits' => 'array', 
     ];
 
@@ -37,4 +37,5 @@ class Commande extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
 }
